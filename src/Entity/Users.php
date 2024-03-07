@@ -31,6 +31,9 @@ class Users
     #[ORM\Column(length: 5, nullable: false)]
     private ?string $postalCode;
 
+    #[ORM\Column(length: 125, nullable: false)]
+    private ?string $state;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +111,24 @@ class Users
         return $this;
     }
 
+    /**
+     * Get the value of state
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set the value of state
+     */
+    public function setState(?string $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
     public function jsonSerialize()
     {
         return [
@@ -117,7 +138,8 @@ class Users
             'lastSecondName'    => $this->lastSecondName,
             'email'             => $this->email, 
             'phone'             => $this->phone, 
-            'postalCode'        => $this->postalCode
+            'postalCode'        => $this->postalCode,
+            'state'             => $this->state
         ];
     }
 }
