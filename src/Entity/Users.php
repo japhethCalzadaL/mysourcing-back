@@ -107,4 +107,17 @@ class Users
 
         return $this;
     }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id'                => $this->id,
+            'name'              => $this->name,
+            'lastName'          => $this->lastName,
+            'lastSecondName'    => $this->lastSecondName,
+            'email'             => $this->email, 
+            'phone'             => $this->phone, 
+            'postalCode'        => $this->postalCode
+        ];
+    }
 }

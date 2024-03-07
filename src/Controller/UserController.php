@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\DTO\UserDTO;
 use App\Entity\Users;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +15,26 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
+    #[Route('/user', name: 'user', methods: ["GET"])]
+    public function userList(EntityManagerInterface $entityManager)
+    {
+        $collection = new ArrayCollection();
+
+        /** @var User $User */
+        $users = $entityManager->getRepository(Users::class)->findAll();
+        foreach ($users as $item) {
+            $data = $item->jsonSerialize();
+            $collection->add($data);
+        }
+
+        return $this->json([
+            'status' => "OK",
+            'users' =>  $collection
+        ],Response::HTTP_OK );
+    }
+
     #[Route('/user', name: 'userCreate', methods: ["POST"])]
-    public function number(
+    public function user(
         Request $request,  
         SerializerInterface $serializer, 
         ValidatorInterface $validator,
