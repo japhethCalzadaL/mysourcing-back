@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'user', methods: ["GET"])]
+    #[Route('/user', name: 'user', methods: ["GET", "HEAD"])]
     public function userList(EntityManagerInterface $entityManager)
     {
         $collection = new ArrayCollection();
